@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swjd.mapper.GoodsAllMapper">
+
+    <resultMap id="m1" type="com.swjd.bean.Goodsall">
+        <id property="goodsId" column="goodsId"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="goodsPrice" column="goodsPrice"/>
+        <result property="goodsPhoto" column="goodsPhoto"/>
+        <result property="dessertId" column="dessertId"/>
+        <result property="materials" column="materials"/>
+        <collection property="sells" ofType="com.swjd.bean.Sell">
+            <id property="sellId" column="sellId"/>
+            <result property="goodsId" column="goodsId"/>
+            <result property="surplusNum" column="surplusNum"/>
+            <result property="sellNum" column="sellNum"/>
+            <result property="dessertId" column="dessertId"/>
+        </collection>
+
+    </resultMap>
+
+    <select id="findAll" resultMap="m1">
+       SELECT * FROM goodsall ga,sell s  WHERE ga.dessertId=#{dessertId} AND ga.goodsId=s.goodsId limit #{page},#{rows}
+
+    </select>
+    <select id="findById" resultMap="m1">
+        SELECT * FROM goodsall ga,sell s  WHERE   ga.goodsId=s.goodsId and ga.goodsId=#{id}
+    </select>
+    <select id="findByNum" resultMap="m1">
+        SELECT * FROM goodsall ga,sell s  WHERE ga.goodsId=s.goodsId
+    </select>
+    <select id="findByTj" resultMap="m1">
+        SELECT * FROM goodsall ga,sell s  WHERE ga.goodsId=s.goodsId
+        <if test="goodsName!=null and goodsName!= ''">
+            and goodsName like '%' #{goodsName} '%'
+        </if>
+
+    </select>
+</mapper>

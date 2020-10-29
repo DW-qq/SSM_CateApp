@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swjd.mapper.RefundMapper">
+<resultMap id="m1" type="com.swjd.bean.Refund">
+    <id property="refundId" column="refundId"/>
+    <result property="refundDate" column="refundDate"/>
+    <result property="goodsId" column="goodsId"/>
+    <result property="count" column="count"/>
+    <result property="specsChoice" column="specsChoice"/>
+    <result property="tasteChoice" column="tasteChoice"/>
+    <result property="userId" column="userId"/>
+    <association property="goodsalls" javaType="com.swjd.bean.Goodsall">
+        <id property="goodsId" column="goodsId"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="goodsPrice" column="goodsPrice"/>
+        <result property="goodsPhoto" column="goodsPhoto"/>
+        <result property="dessertId" column="dessertId"/>
+        <result property="materials" column="materials"/>
+    </association>
+</resultMap>
+    <select id="findById" resultMap="m1">
+        select * from refund,goodsall where refund.goodsId=goodsall.goodsId and refund.userId=#{uid}
+    </select>
+</mapper>

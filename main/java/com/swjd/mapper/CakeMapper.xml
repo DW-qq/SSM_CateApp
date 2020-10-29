@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swjd.mapper.CakeMapper">
+
+    <resultMap id="m1" type="com.swjd.bean.Cake">
+        <id property="cakeId" column="cakeId"/>
+        <result property="cakeName" column="cakeName"/>
+        <result property="cakePrice" column="cakePrice"/>
+        <result property="cakePhoto" column="cakePhoto"/>
+        <result property="dessertId" column="dessertId"/>
+        <result property="sellId" column="sellId"/>
+        <result property="materials" column="materials"/>
+        <collection property="cakesells" ofType="com.swjd.bean.Cakesell">
+            <id column="c_sellId" property="cSellId"/>
+            <result property="cSellNum" column="c_sellNum"/>
+            <result property="cSurplusNum" column="c_surplusNum"/>
+            <result property="dessertId" column="dessertId"/>
+            <result property="cakeId" column="cakeId"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="m1">
+        SELECT * FROM cake c,cakesell s WHERE c.cakeId=s.cakeId limit #{page},#{rows}
+    </select>
+    <select id="queryFenYe" resultMap="m1">
+         SELECT * FROM cake c,cakesell s WHERE c.cakeId=s.cakeId
+    </select>
+    <select id="findById" resultMap="m1">
+        SELECT * FROM cake c,cakesell s WHERE c.cakeId=s.cakeId and c.cakeId=#{cakeId}
+    </select>
+</mapper>

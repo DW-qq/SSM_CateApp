@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swjd.mapper.WineMapper">
+
+    <resultMap id="m1" type="com.swjd.bean.Wine">
+        <id property="wineId" column="wineId"/>
+        <result property="wineName" column="wineName"/>
+        <result property="winePrice" column="winePrice"/>
+        <result property="winePhoto" column="winePhoto"/>
+        <result property="dessertId" column="dessertId"/>
+        <result property="sellId" column="sellId"/>
+        <result property="materials" column="materials"/>
+        <collection property="wines" ofType="com.swjd.bean.Winsell">
+            <id column="w_sellId" property="wSellId"/>
+            <result property="wSellNum" column="w_sellNum"/>
+            <result property="wSurplusNum" column="w_surplusNum"/>
+            <result property="dessertId" column="dessertId"/>
+            <result property="wineId" column="wineId"/>
+        </collection>
+    </resultMap>
+    <select id="findAll" resultMap="m1">
+        SELECT * FROM wine w,winsell ws WHERE w.wineId=ws.wineId limit #{page},#{rows}
+    </select>
+    <select id="queryFenYe" resultMap="m1">
+        SELECT * FROM wine w,winsell ws WHERE w.wineId=ws.wineId
+    </select>
+    <select id="findById" resultMap="m1">
+                SELECT * FROM wine w,winsell ws WHERE w.wineId=ws.wineId and w.wineId=#{wineId}
+    </select>
+</mapper>

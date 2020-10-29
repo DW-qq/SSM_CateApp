@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swjd.mapper.GrangMapper">
+
+    <resultMap id="m1" type="com.swjd.bean.Grang">
+        <id property="grangId" column="grangId"/>
+        <result property="grangName" column="grangName"/>
+        <result property="grangPrice" column="grangPrice"/>
+        <result property="grangPhoto" column="grangPhoto"/>
+        <result property="dessertId" column="dessertId"/>
+        <result property="sellId" column="sellId"/>
+        <result property="materials" column="materials"/>
+        <collection property="grangsells" ofType="com.swjd.bean.Grangsell">
+            <id column="g_sellId" property="gSellId"/>
+            <result property="gSellNum" column="g_sellNum"/>
+            <result property="gSurplusNum" column="g_surplusNum"/>
+            <result property="dessertId" column="dessertId"/>
+            <result property="grangId" column="grangId"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="m1">
+        SELECT  * FROM grang g,grangsell s WHERE g.grangId=s.grangId limit #{page},#{rows}
+    </select>
+    <select id="queryFenYe" resultMap="m1">
+        SELECT  * FROM grang g,grangsell s WHERE g.grangId=s.grangId
+    </select>
+    <select id="findById" resultMap="m1">
+        SELECT * FROM grang g,grangsell gs WHERE g.grangId=gs.grangId and g.grangId=#{grangId}
+    </select>
+</mapper>

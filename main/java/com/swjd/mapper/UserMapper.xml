@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.swjd.mapper.UserMapper">
+
+
+    <insert id="addUser">
+        insert into user_tab values (null,#{user.utelephone},#{user.upassword}
+        <if test="user.uphoto!=null || user.uphoto !=''">
+            ,#{user.uphoto}
+        </if>
+        <if test="user.petname!=null || user.petname!=''">
+            ,#{user.petname}
+        </if>
+        <if test="user.ubirthday!=null || user.ubirthday!=''">
+            ,#{user.ubirthday}
+        </if>
+        <if test="user.uadderss!=null || user.uadderss!=''">
+            ,#{user.uadderss}
+        </if>
+        )
+    </insert>
+    <update id="updateUser">
+        update user_tab set
+        <if test="user.uphoto!=null || user.uphoto !=''">
+            uphoto=#{user.uphoto},
+        </if>
+        <if test="user.petname!=null || user.petname!=''">
+            petname=#{user.petname},
+        </if>
+        <if test="user.ubirthday!=null || user.ubirthday!=''">
+            ubirthday=#{user.ubirthday},
+        </if>
+        <if test="user.uadderss!=null || user.uadderss!=''">
+            uadderss=#{user.uadderss}
+        </if>
+        where uid=#{uid}
+    </update>
+</mapper>
